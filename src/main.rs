@@ -4,7 +4,6 @@ use std::net::{ TcpListener, TcpStream };
 use std::io:: { Read, Write };
 use std::env;
 
-
 #[macro_use]
 extern crate serde_derive;
 
@@ -23,7 +22,6 @@ const DB_URL: &str = env!("DATABASE_URL");
 const OK_RESPONSE : &str = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n";
 const NOT_FOUND: &str = "HTTP/1.1 404 NOT FOUND\r\n\r\n";
 const INTERNAL_SERVER_ERROR: &str = "HTTP/1.1 500 INTERNAL SERVER ERROR\r\n\r\n";
-
 
 fn main() {
     if let Err(e) = set_database() {
@@ -78,7 +76,6 @@ fn handle_client(mut stream: TcpStream) {
 //Controllers
 
 //handle_post_request
-
 fn handle_post_request(request: &str) -> (String, String) {
     match (get_user_request_body(&request), Client::connect(DB_URL, NoTls)) {
         (Ok(user), Ok(mut client)) => {
@@ -114,7 +111,6 @@ fn handle_get_request(request: &str) -> (String, String) {
         _ => (INTERNAL_SERVER_ERROR.to_string(), "Error".to_string()),
     }
 }
-
 
 fn handle_get_all_request(request: &str) -> (String, String) {
     match Client::connect(DB_URL, NoTls) {
@@ -171,8 +167,6 @@ fn handle_delete_request(request: &str) -> (String, String) {
         _ => (INTERNAL_SERVER_ERROR.to_string(), "Error".to_string()),
     }
 }
-
-
 
 fn set_database() -> Result<(), PostgresError> {
     //Connect to database
